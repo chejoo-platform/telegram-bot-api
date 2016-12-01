@@ -71,13 +71,16 @@
 
 ;; API Call Result Type ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn parse-response
-  "Parse the result of an api call."
-  [response]
-  (-> response
-      :body
-      bs/to-string
-      (json/decode #(->> % csk/->kebab-case-string (keyword (str *ns*))))))
+(let [ns-str (str *ns*)]
+  (defn parse-response
+    "Parse the result of an api call."
+    [response]
+    (-> response
+        :body
+        bs/to-string
+        (json/decode #(->> %
+                           csk/->kebab-case-string
+                           (keyword ns-str))))))
 
 (s/def ::body
   (s/with-gen (s/and string? json/decode)
