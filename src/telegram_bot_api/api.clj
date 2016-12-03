@@ -1,21 +1,11 @@
 (ns telegram-bot-api.api
-  (:require [clojure.spec :as s]
-            [telegram-bot-api.core :as tcore]))
+  (:require [clojure
+             [spec :as s]]
+            [telegram-bot-api
+             [core :as tcore :refer [call]]
+             [specs :as specs]]))
 
-;; Getting Updates ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(s/def ::tcore/update-id int?)
-(s/def ::tcore/message ::message)
-(s/def ::tcore/edited-message ::message)
-(s/def ::tcore/inline-query ::inline-query)
-(s/def ::tcore/chosen-inline-result ::chosen-inline-result)
-(s/def ::tcore/callback-query ::callback-query)
-
-(s/def ::update (s/keys :req [::tcore/update-id]
-                        :opt [::tcore/message ::tcore/edited-message
-                              ::tcore/inline-query ::tcore/chosen-inline-result
-                              ::tcore/callback-query]))
-
+;; Getting Updates
 
 (defn get-updates
   [& args]
@@ -31,13 +21,10 @@
   (s/keys* :opt-un [::offset ::limit ::timeout]))
 (s/fdef get-updates
         :args ::get-updates-args
-        :ret (s/or :success (s/coll-of ::update)
+        :ret (s/or :success (s/coll-of ::specs/update)
                    :failure ::tcore/result-error))
 
-(comment
-  (s/conform ::get-updates-args [:offset 10])
-  )
-
+;; Setting Webhook
 
 (defn set-webhook
   [& args]
