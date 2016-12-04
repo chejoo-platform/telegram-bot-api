@@ -34,6 +34,7 @@
 (s/def ::tcore/last-name string?)
 (s/def ::tcore/last_error_message string?)
 (s/def ::tcore/left-chat-member ::user)
+(s/def ::tcore/length int?)
 (s/def ::tcore/location ::location)
 (s/def ::tcore/message ::message)
 (s/def ::tcore/message-id int?)
@@ -42,6 +43,7 @@
 (s/def ::tcore/new-chat-member ::user)
 (s/def ::tcore/new-chat-photo (s/coll-of ::photo-size))
 (s/def ::tcore/new-chat-title string?)
+(s/def ::tcore/offset int?)
 (s/def ::tcore/pending-update-count int?)
 (s/def ::tcore/pinned-message ::message)
 (s/def ::tcore/photo (s/coll-of ::photo-size))
@@ -53,6 +55,7 @@
 (s/def ::tcore/type string?)
 (s/def ::tcore/update-id int?)
 (s/def ::tcore/url string?)
+(s/def ::tcore/user ::user)
 (s/def ::tcore/username string?)
 (s/def ::tcore/venue ::venue)
 (s/def ::tcore/video ::video)
@@ -76,6 +79,9 @@
                                ::tcore/migrate-to-chat-id
                                ::tcore/migrate-from-chat-id
                                ::tcore/pinned-message]))
+
+(s/def ::message-entity (s/keys :req [::tcore/type ::tcore/offset ::tcore/length]
+                                :opt [::tcore/url ::tcore/user]))
 
 (s/def ::inline-query any?)
 (s/def ::chosen-inline-result any?)
