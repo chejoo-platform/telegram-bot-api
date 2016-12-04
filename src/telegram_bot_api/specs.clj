@@ -33,3 +33,11 @@
                                     ::tcore/pending-update-count]
                               :opt [::tcore/last-error-date
                                     ::tcore/last_error_message]))
+
+(s/def ::tcore/id int?)
+(s/def ::tcore/first-name string?)
+(s/def ::tcore/last-name string?)
+(s/def ::tcore/username string?)
+
+(s/def ::user (s/keys :req [::tcore/id ::tcore/first-name]
+                      :opt [::tcore/last-name ::tcore/username]))
